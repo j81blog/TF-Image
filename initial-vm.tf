@@ -83,7 +83,6 @@ resource "azurerm_windows_virtual_machine" "vm_init" {
   }
 
   tags = {
-    environment = "Production"
-    hostpool = var.avd_workspace_name
+    environment = "Temp"
   }
 }
