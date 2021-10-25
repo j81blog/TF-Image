@@ -14,8 +14,8 @@ provider "azurerm" {
 
 
 resource "azurerm_resource_group" "rg-vm" {
-  name     = var.rg_vm_name
-  location = var.rg_vm_location
+  name     = var.rg_name
+  location = var.rg_location
 }
 
 resource "azurerm_virtual_network" "vnet" {
