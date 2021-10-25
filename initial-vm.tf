@@ -12,6 +12,12 @@ provider "azurerm" {
 
 }
 
+resource "random_string" "string" {
+  length           = 16
+  special          = true
+  override_special = "/@£$"
+}
+
 
 resource "azurerm_resource_group" "rg-vm" {
   name     = var.rg_name
