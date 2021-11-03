@@ -44,7 +44,7 @@ variable "vnet_name" {
   description = "What is the vnet name"
 }
 
-variable "address_space" {
+variable "vnet_address_space" {
   type        = list
   description = "What is the vnet address"
 }
