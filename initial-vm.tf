@@ -25,24 +25,21 @@ resource "azurerm_resource_group" "rg-vm" {
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = var.init_vnet_name
+  name                = var.vnet_name
   location            = azurerm_resource_group.rg-vm.location
   resource_group_name = azurerm_resource_group.rg-vm.name
   address_space       = var.vnet_address_space
-  tags = {
-    environment = "Terraform test"
-  }
 }
 
 resource "azurerm_subnet" "defaultSubnet" {
-  name           = "defaultSubnet"
+  name           = var.vnet_subnet_name
   resource_group_name = azurerm_resource_group.rg-vm.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes = ["10.0.1.0/24"]
+  address_prefixes = var.vnet_subnet_address
 }
 
 resource "azurerm_network_interface" "vm_nic" {
-  name                = "nic-${var.init_vm_name}"
+  name                = "nic-${var.vm_name}"
   location            = azurerm_resource_group.rg-vm.location
   resource_group_name = azurerm_resource_group.rg-vm.name
 
@@ -58,15 +55,15 @@ resource "azurerm_windows_virtual_machine" "vm_init" {
       azurerm_network_interface.vm_nic
   ]
   
-  name                = var.init_vm_name
+  name                = var.vm_name
   resource_group_name = azurerm_resource_group.rg-vm.name
   location            = azurerm_resource_group.rg-vm.location
-  size                = "Standard_B2MS"
+  size                = var.vm_size
   admin_username      = "adminuser"
   admin_password      = random_string.string.result
   
   network_interface_ids = [
-    "${azurerm_resource_group.rg-vm.id}/providers/Microsoft.Network/networkInterfaces/nic-${var.init_vm_name}"
+    "${azurerm_resource_group.rg-vm.id}/providers/Microsoft.Network/networkInterfaces/nic-${var.vm_name}"
   ]
 
   
@@ -76,10 +73,10 @@ resource "azurerm_windows_virtual_machine" "vm_init" {
   }
 
   source_image_reference {
-    publisher = "MicrosoftWindowsDesktop"
-    offer     = "windows-10"
-    sku       = "21h1-ent-g2"
-    version   = "latest"
+    publisher = var.vm_source_publisher
+    offer     = var.vm_source_offer
+    sku       = var.vm_source_sku
+    version   = var.vm_source_version
   }
 
   tags = {

@@ -1,29 +1,60 @@
 variable "rg_name" {
   type        = string
-  default     = "rg-temp-init"
+  description = "How is the resource group called"
 }
 
 variable "rg_location" {
   type        = string
-  default     = "West Europe"
+  description = "What is the resource group location"
 }
 
-variable "init_vm_name" {
-    type      = string
-  default     = "vm-init"
-  }
+variable "vm_name" {
+  type      = string
+  description = "Enter the VM name"
+}
 
-variable "init_vnet_name" {
+variable "vm_size" {
+  type      = string
+  description = "Give a vm size like Standard_B2MS"
+}
+
+variable "vm_source_publisher" {
+  type      = string
+  description = "What is the image publisher"
+}
+
+variable "vm_source_offer" {
+  type      = string
+  description = "What is the image offer"
+}
+
+variable "vm_source_sku" {
   type        = string
-  default     = "vnet-temp-init"
+  description = "What is the image sku"
 }
 
-variable "vnet_nsg_name" {
+variable "vm_source_version" {
+  type      = string
+  description = "What is the image version, latest?"
+}
+
+
+variable "vnet_name" {
   type        = string
-  default     = "nsg-temp-init"
+  description = "What is the vnet name"
 }
 
-variable "vnet_address_space" {
+variable "address_space" {
   type        = list
-  default     = ["10.0.0.0/16"]
+  description = "What is the vnet address"
+}
+
+variable "vnet_subnet_name" {
+  type        = list
+  description = "How is the subnet called"
+}
+
+variable "vnet_subnet_address" {
+  type        = list
+  description = "What is the subnet address"
 }
