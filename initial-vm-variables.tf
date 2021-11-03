@@ -50,7 +50,7 @@ variable "vnet_address_space" {
 }
 
 variable "vnet_subnet_name" {
-  type        = list
+  type        = string
   description = "How is the subnet called"
 }
 
