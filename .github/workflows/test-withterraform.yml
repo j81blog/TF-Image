@@ -63,12 +63,12 @@ jobs:
                 # Check for current run status
                 $runDataUrl = $runUrl+ $runData.id
                 $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data.attributes.status
-                if ($status -eq 'errored'){
-                  Throw "Terraform has an error" 
-                }
                 do {
                       $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data.attributes.status
                       $status
+                      if ($status -eq 'errored'){
+                        Throw "Terraform has an error" 
+                      }
                   }
                 while ($status -ne 'applied')
             
