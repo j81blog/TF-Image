@@ -63,11 +63,16 @@ jobs:
                 # Check for current run status
                 $runDataUrl = $runUrl+ $runData.id
                 $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data.attributes.status
-                do {
-                    $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data.attributes.status
-                    $status
+                if ($status -ne 'errored'){
+                  do {
+                      $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data.attributes.status
+                      $status
+                  }
+                  while ($status -ne 'applied')
                 }
-                while (($status -ne 'applied') -or ($status -ne 'errored'))
+                else {
+                  exit;
+                }
           # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
           azPSVersion: latest
           # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
