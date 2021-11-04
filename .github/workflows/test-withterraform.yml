@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  buildVm:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -27,7 +27,7 @@ jobs:
         run: | 
           ./trigger-terraform-run.ps1 -workspaceId 'ws-a6rZT4WRauF45abw' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From ${{ github.job }}"
         shell: pwsh  
-  prep:
+  prepVm:
     needs: build
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -69,4 +69,15 @@ jobs:
           azPSVersion: latest
         # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
           errorActionPreference: 'stop'
-        # If this is true, this task will fail if any errors are written to the error pipeline, or if any data is written to the Standard Error stream.
+  buildAVD:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Trigger Terraform
+        run: | 
+          ./trigger-terraform-run.ps1 -workspaceId 'ws-xAJ3c69Kf5k13T3w' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From ${{ github.job }}"
+        shell: pwsh  
+      
