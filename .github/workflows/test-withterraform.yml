@@ -77,6 +77,7 @@ jobs:
           errorActionPreference: 'stop'
           # If this is true, this task will fail if any errors are written to the error pipeline, or if any data is written to the Standard Error stream.
   prep:
+    needs: build
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
