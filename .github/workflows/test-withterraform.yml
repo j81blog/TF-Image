@@ -28,7 +28,7 @@ jobs:
           ./trigger-terraform-run.ps1 -workspaceId 'ws-a6rZT4WRauF45abw' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From ${{ github.job }}"
         shell: pwsh  
   prepVm:
-    needs: build
+    needs: buildVm
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -70,7 +70,9 @@ jobs:
         # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
           errorActionPreference: 'stop'
   buildAVD:
-    # The type of runner that the job will run on
+    needs: 
+      buildVm
+      prepVm
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
