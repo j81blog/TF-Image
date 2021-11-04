@@ -32,7 +32,7 @@ jobs:
                 $body = @{
                     data = @{
                         attributes    = @{
-                            message      = "From Github Action ${{ env.GITHUB_RUN_NUMBER }}"
+                            message      = "From Github Action ${GITHUB_RUN_NUMBER}"
                             "auto-apply" = $true
                         }
                         type          = "runs"
