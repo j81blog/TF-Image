@@ -88,7 +88,7 @@ jobs:
           inlineScript: |
                 #Credentials
                 $passwd = ConvertTo-SecureString ${{ secrets.ARM_CLIENT_SECRET }} -AsPlainText -Force
-                $pscredential = New-Object System.Management.Automation.PSCredential(${{ secrets.ARM_CLIENT_ID }}, $passwd)
+                $pscredential = New-Object System.Management.Automation.PSCredential('34c7d886-2a8c-4637-aa56-7b6690c5c835', $passwd)
                 Connect-AzAccount -ServicePrincipal -Credential $pscredential -Tenant ${{ secrets.ARM_TENANT_ID }} -Subscription ${{ secrets.ARM_SUBSCRIPTION_ID }}
           azPSVersion: latest
         # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
