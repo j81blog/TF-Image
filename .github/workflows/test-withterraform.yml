@@ -65,13 +65,13 @@ jobs:
                 $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data.attributes.status
                 if ($status -eq 'errored'){
                   Throw "Terraform has an error" 
-                  }
+                }
                 do {
                       $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data.attributes.status
                       $status
                   }
-                  while ($status -ne 'applied')
-                }
+                while ($status -ne 'applied')
+            
           # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
           azPSVersion: latest
           # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
