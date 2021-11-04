@@ -70,9 +70,7 @@ jobs:
         # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
           errorActionPreference: 'stop'
   buildAVD:
-    needs: 
-      buildVm
-      prepVm
+    needs: [buildVm, prepVm]
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
