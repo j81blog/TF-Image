@@ -6,8 +6,8 @@ rg_location = "WestEurope"
 vm_name = "vm-init"
 vm_size = "Standard_B2MS"
 vm_source_publisher = "MicrosoftWindowsDesktop"
-vm_source_offer = "windows-11"
-vm_source_sku= "21h1-ent-g2"
+vm_source_offer = "windows11preview"
+vm_source_sku= "win11-21h2-avd"
 vm_source_version = "latest"
 
 
