@@ -48,5 +48,11 @@ $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data
 do {
     $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data.attributes.status
     $status
+    if ($status -eq 'errored'){
+      Throw "Terraform has an error" 
+    }
+    if ($status -eq 'canceled'){
+        Throw "Terraform has canceled" 
+      }
 }
 while ($status -ne 'applied')
