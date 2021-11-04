@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Trigger Terraform
         run: | 
-          ./trigger-terraform-run.ps1 -workspaceId 'ws-a6rZT4WRauF45abw' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From ${{ github.job }}"
+          ./trigger-terraform-run.ps1 -workspaceId 'ws-a6rZT4WRauF45abw' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From GitHub job $GITHUB_JOB"
         shell: pwsh  
   prepVm:
     needs: buildVm
@@ -78,6 +78,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Trigger Terraform
         run: | 
-          ./trigger-terraform-run.ps1 -workspaceId 'ws-xAJ3c69Kf5k13T3w' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From ${{ github.job }}"
+          ./trigger-terraform-run.ps1 -workspaceId 'ws-xAJ3c69Kf5k13T3w' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From GitHub job $GITHUB_JOB"
         shell: pwsh  
       
