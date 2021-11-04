@@ -80,7 +80,7 @@ jobs:
         run: | 
           ./trigger-terraform-run.ps1 -workspaceId 'ws-xAJ3c69Kf5k13T3w' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From GitHub job $GITHUB_RUN_ID"
         shell: pwsh  
-  buildAVD:
+  destroyVm:
     needs: [buildAVD]
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
