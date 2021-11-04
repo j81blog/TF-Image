@@ -57,6 +57,7 @@ do {
     }
     if ($status -eq 'canceled'){
         Throw "Terraform has canceled" 
-      }
+    }
+    Start-Sleep 15
 }
 while ($status -ne 'applied')
