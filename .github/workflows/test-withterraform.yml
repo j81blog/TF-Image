@@ -89,9 +89,9 @@ jobs:
                 $passwd = ConvertTo-SecureString ${{ secrets.ARM_CLIENT_SECRET }} -AsPlainText -Force
                 $pscredential = New-Object System.Management.Automation.PSCredential(${{ secrets.ARM_CLIENT_ID }}, $passwd)
                 Connect-AzAccount -ServicePrincipal -Credential $pscredential -Tenant ${{ secrets.ARM_TENANT_ID }} -Subscription ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        azPSVersion: latest
-      # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
-        errorActionPreference: 'stop'
+          azPSVersion: latest
+        # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
+          errorActionPreference: 'stop'
       # If this is true, this task will fail if any errors are written to the error pipeline, or if any data is written to the Standard Error stream.
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
@@ -113,7 +113,7 @@ jobs:
                 } until ( $status -match "stopped")
                 Write-Output "$virtualMachineName has status $status"
                 $vm | Set-AzVm -Generalized
-        azPSVersion: latest
-      # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
-        errorActionPreference: 'stop'
-      # If this is true, this task will fail if any errors are written to the error pipeline, or if any data is written to the Standard Error stream.
+          azPSVersion: latest
+        # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
+          errorActionPreference: 'stop'
+        # If this is true, this task will fail if any errors are written to the error pipeline, or if any data is written to the Standard Error stream.
