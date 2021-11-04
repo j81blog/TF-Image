@@ -1,13 +1,16 @@
 [CmdletBinding()]
 param (
-    [Parameter()]
+    [Parameter(Mandatory)]
     [string]$workspaceId,
 
-    [Parameter()]
+    [Parameter(Mandatory)]
     [string]$token, 
 
+    [Parameter(Mandatory)]
+    [string]$triggerMessage,
+
     [Parameter()]
-    [string]$triggerMessage
+    [boolean]$destroy = $false
 )
 
 $body = @{
@@ -15,6 +18,7 @@ $body = @{
         attributes    = @{
             message      = $triggerMessage
             "auto-apply" = $true
+            "is-destroy" = $destroy
         }
         type          = "runs"
         relationships = @{
