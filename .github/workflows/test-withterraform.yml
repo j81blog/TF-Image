@@ -24,7 +24,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Trigger Terraform
-        run: .\trigger-terraform-run.ps -workspaceId 'ws-a6rZT4WRauF45abw' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From ${{ github.job }}"
+        run: .\trigger-terraform-run.ps1 -workspaceId 'ws-a6rZT4WRauF45abw' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From ${{ github.job }}"
   prep:
     needs: build
     # The type of runner that the job will run on
