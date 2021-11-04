@@ -83,16 +83,16 @@ jobs:
     steps:
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
-          with:
-            inlineScript: |
+        with:
+          inlineScript: |
                 #Credentials
                 $passwd = ConvertTo-SecureString ${{ secrets.ARM_CLIENT_SECRET }} -AsPlainText -Force
                 $pscredential = New-Object System.Management.Automation.PSCredential(${{ secrets.ARM_CLIENT_ID }}, $passwd)
                 Connect-AzAccount -ServicePrincipal -Credential $pscredential -Tenant ${{ secrets.ARM_TENANT_ID }} -Subscription ${{ secrets.ARM_SUBSCRIPTION_ID }}
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
-          with:
-            inlineScript: |
+        with:
+          inlineScript: |
                 function test-VMstatus($virtualMachineName) {
                   $vmStatus = Get-AzVM -name $virtualMachineName -Status
                   "$virtualMachineName status " + $vmstatus.PowerState
