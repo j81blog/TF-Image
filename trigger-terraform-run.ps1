@@ -28,7 +28,6 @@ $body = @{
     }
 }
 $jsonBody = $body | ConvertTo-Json -Depth 5
-$token = $env:terraFormToken
 $header = @{
     Authorization  = "Bearer $token"
     "Content-Type" = "application/vnd.api+json"
