@@ -71,10 +71,41 @@ jobs:
                       }
                   }
                 while ($status -ne 'applied')
-            
           # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
           azPSVersion: latest
           # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
           errorActionPreference: 'stop'
           # If this is true, this task will fail if any errors are written to the error pipeline, or if any data is written to the Standard Error stream.
+  prep:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Azure PowerShell Action
+        uses: Azure/powershell@v1
+          with:
+            inlineScript: |
+                #Credentials
+                $passwd = ConvertTo-SecureString ${{ secrets.ARM_CLIENT_SECRET }} -AsPlainText -Force
+                $pscredential = New-Object System.Management.Automation.PSCredential(${{ secrets.ARM_CLIENT_ID }}, $passwd)
+                Connect-AzAccount -ServicePrincipal -Credential $pscredential -Tenant ${{ secrets.ARM_TENANT_ID }} -Subscription ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      - name: Azure PowerShell Action
+        uses: Azure/powershell@v1
+          with:
+            inlineScript: |
+                function test-VMstatus($virtualMachineName) {
+                  $vmStatus = Get-AzVM -name $virtualMachineName -Status
+                  "$virtualMachineName status " + $vmstatus.PowerState
+                }
 
+                $virtualMachineName = "vm-init"
+                $vm = get-azvm -name $virtualMachineName
+                $vm | Invoke-AzVMRunCommand -CommandId 'RunPowerShellScript' -ScriptPath .\sysprep.ps1
+                Write-Output "$virtualMachineName is going to be generalized, waiting till vm is stopped"
+                do {
+                    $status = test-vmStatus -virtualMachineName $virtualMachineName
+                    $status
+                    Start-Sleep 10
+                } until ( $status -match "stopped")
+                Write-Output "$virtualMachineName has status $status"
+                $vm | Set-AzVm -Generalized
