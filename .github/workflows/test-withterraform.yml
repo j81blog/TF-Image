@@ -32,7 +32,7 @@ jobs:
                 $body = @{
                     data = @{
                         attributes    = @{
-                            message      = "From Github Action ${GITHUB_RUN_NUMBER}"
+                            message      = "From Github Action ${github.job}"
                             "auto-apply" = $true
                         }
                         type          = "runs"
@@ -82,6 +82,7 @@ jobs:
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: actions/checkout@v2
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
         with:
