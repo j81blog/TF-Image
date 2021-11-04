@@ -23,59 +23,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Azure PowerShell Action
-        uses: Azure/powershell@v1
-        with:
-          # Specify the Az PowerShell script here.
-          inlineScript: |
-                $workspaceId = "ws-a6rZT4WRauF45abw"
-                $body = @{
-                    data = @{
-                        attributes    = @{
-                            message      = "From Github Action ${github.job}"
-                            "auto-apply" = $true
-                        }
-                        type          = "runs"
-                        relationships = @{
-                            workspace = @{
-                                data = @{
-                                    type = "workspaces"
-                                    id   = $workspaceId
-                                }
-                            }
-                        }
-                    }
-                }
-                $jsonBody = $body | ConvertTo-Json -Depth 5
-                $token = "${{ secrets.terraform_token }}"
-                $header = @{
-                    Authorization  = "Bearer $token"
-                    "Content-Type" = "application/vnd.api+json"
-                }
-                $parameters = @{
-                    header = $header
-                    method = "POST"
-                    body   = $jsonBody
-                }
-                # Start to run the workspace
-                $runUrl = "https://app.terraform.io/api/v2/runs/"
-                $runData = (Invoke-RestMethod -Uri $runUrl @parameters).data
-                # Check for current run status
-                $runDataUrl = $runUrl+ $runData.id
-                $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data.attributes.status
-                do {
-                      $status = (Invoke-RestMethod -Uri $runDataUrl -Headers $header -Method GET).data.attributes.status
-                      $status
-                      if ($status -eq 'errored'){
-                        Throw "Terraform has an error" 
-                      }
-                  }
-                while ($status -ne 'applied')
-          # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
-          azPSVersion: latest
-          # Select the value of the ErrorActionPreference variable for executing the script. Options: stop, continue, silentlyContinue. Default is Stop.
-          errorActionPreference: 'stop'
-          # If this is true, this task will fail if any errors are written to the error pipeline, or if any data is written to the Standard Error stream.
+      - name: Trigger Terraform
+        run: .\trigger-terraform-run.ps -workspaceId 'ws-a6rZT4WRauF45abw' -token ${{ secrets.TERRAFORM_TOKEN }} -triggerMessage "From ${github.job}"
   prep:
     needs: build
     # The type of runner that the job will run on
