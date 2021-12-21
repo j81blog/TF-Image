@@ -1,6 +1,6 @@
 # In this file all variable values are stored.
 # Initial Image settings
-rg_name = "rg-temp-init"
+rg_name = "rg-weu-03-init-temp"
 rg_location = "WestEurope"
 
 vm_name = "vm-init"
@@ -12,7 +12,7 @@ vm_source_version = "latest"
 
 
 # Virtual Network settings
-vnet_name = "vnet-roz-bh-001"
-vnet_address_space = ["10.0.0.0/16"]
+vnet_name = "vnet-weu-03-init-vnet01"
+vnet_address_space = ["10.3.16.0/21"]
 vnet_subnet_name = "DefaultSubnet"
-vnet_subnet_address = ["10.0.1.0/24"]
+vnet_subnet_address = ["10.3.17.0/24"]
